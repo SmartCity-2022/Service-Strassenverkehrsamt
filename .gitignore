@@ -46,6 +46,8 @@
 *.pif
 *.vb
 *.wsf
+[Bb]in/*
+[Oo]ut/*
 
 # 3D Images
 *.3dm
@@ -69,8 +71,18 @@
 *.wmv
 *.webm
 
-### dotenv ###
+### Environments ###
 .env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Logging
+*.log
+[Ll]log/*
 
 ### venv ###
 # Virtualenv
@@ -187,15 +199,6 @@ celerybeat.pid
 # SageMath parsed files
 *.sage.py
 
-# Environments
-.env
-.venv
-env/
-venv/
-ENV/
-env.bak/
-venv.bak/
-
 # Spyder project settings
 .spyderproject
 .spyproject
@@ -225,7 +228,6 @@ cython_debug/
 
 ### PyCharm+iml Patch ###
 # Reason: https://github.com/joeblau/gitignore.io/issues/186#issuecomment-249601023
-
 *.iml
 modules.xml
 .idea/misc.xml

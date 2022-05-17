@@ -78,6 +78,7 @@ class Vehicle(models.Model):
     fueltype = models.CharField(db_column='fuelType', max_length=45)  # Field name made lowercase.
     emissions = models.FloatField()
     hudeadline = models.DateTimeField(blank=True, null=True)
+    licenseplate = models.CharField(max_length=10)
 
     class Meta:
         managed = False

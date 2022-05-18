@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
+import configparser
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,6 +28,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+configParser = configparser.RawConfigParser()
+databaseConfigPath = r'./config/db.cfg'
+configParser.read(databaseConfigPath)
 
 # Application definition
 
@@ -40,6 +44,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'stva',
+    'rabbitmq',
 ]
 
 MIDDLEWARE = [
@@ -81,16 +86,12 @@ WSGI_APPLICATION = 'SmartCity.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql', 
-        'NAME': 'stva',
-        'USER': 'root',
-        'PASSWORD': '9870',
-        'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
-        'PORT': '3306',
+        'NAME': configParser.get("database-configuration", "DATABASE"),
+        'USER': configParser.get("database-configuration", "USER"),
+        'PASSWORD': configParser.get("database-configuration", "PASSWORD"),
+        'HOST': configParser.get("database-configuration", "HOST"),
+        'PORT': configParser.get("database-configuration", "PORT"),
     }
-    #'default': {
-    #    'ENGINE': 'django.db.backends.sqlite3',
-    #    'NAME': BASE_DIR / 'db.sqlite3',
-    #}
 }
 
 

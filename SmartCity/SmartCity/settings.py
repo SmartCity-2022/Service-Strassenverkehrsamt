@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 from pathlib import Path
 from rabbitmq.receiver import MQReceiver
+from rabbitmq.sender import send
 import configparser
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -30,8 +31,8 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 configParser = configparser.RawConfigParser()
-databaseConfigPath = r'./config/config.cfg'
-configParser.read(databaseConfigPath)
+configPath = r'./config/config.cfg'
+configParser.read(configPath)
 
 # Application definition
 
@@ -142,3 +143,5 @@ CORS_ALLOW_ALL_ORIGINS = True
 receiver = MQReceiver()
 receiver.daemon = True
 receiver.start()
+
+send(key=configParser.get("rabbitMQ-routes", "HELLO"), headers=None, properties=None, payload="test")

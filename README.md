@@ -1,49 +1,41 @@
 # Service-Strassenverkehrsamt
-## What should the service do?
-The service should provide the following functionalities to a citizen:
+## How to run
 
-- Register a new car to the office
-- Unregister a car, which was registered by the citizen trying to unregister
-- Change registration from one, to another car. Simply, unregister then register to keep license plate
-- Get informations about the registered cars of the citizen
+### Run frontend
 
-## Functions explained quick and dirty
+In directory frontend:
 
-First of, the citizen will need an authorization token delivered by the HUB to use the named functions.
+    npm start
 
-### Registration
 
-To register a new car, the user will have to fill a form with various data of the car like brand, model and year of manufacture.
+### Run backend
 
-Data like brand and model will be fetched from an existing database and presented in a kind of combo box.
+1. Create virtual environment
 
-The user will also have to upload a file, which will be the "HU/AU"-certificate.
+        pip install virtualenv
 
-After this is done, the request will be send to a clerk.
+    - In directory SmartCity
 
-### Unregistration
+            python -m venv [NAME OF VENV]
 
-If a request is verified, the user will be able to unregister the car by simply press a button.
+2.  Activate virtual environment
 
-Maybe it will be a good idea, to add some kind of verification to this step.
+    - On Windows
 
-### Change registration
+            .\path\to\venv\Scripts\activate
 
-As already told, we will simply make a request to delete an entry and create a new one.
+    - On Linux
 
-Deleting the existing entry should be executed, when new one can be accepted.
+            source \path\to\venv\bin\activate.sh
 
-### Information about cars
+3. Install required packages
 
-The user will see the following informations:
+    - Go to SmartCity directory
+    
+            pip install -r requirements.txt
 
-- Brand
-- Model
-- Year of manufacture
-- Date of registration
-- Annual tax rate
+4. Run Application
 
-The tax rate will be calculated as following:
+    - In SmartCity directory
 
-- For each started 100cm³ of engine displacement, there will be 2€ for a petrol engine and 9.50€ for diesel engines
-- For each 25g/CO² there will be a tax of 2€. The first 110g/CO² are taxfree
+            python manage.py runserver

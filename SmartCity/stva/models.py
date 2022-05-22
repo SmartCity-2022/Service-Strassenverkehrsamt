@@ -14,7 +14,7 @@ class Bill(models.Model):
     description = models.CharField(max_length=100)
     issued = models.DateTimeField(auto_now_add=True)
     payed = models.DateTimeField(blank=True, null=True)
-    receiver = models.IntegerField()
+    receiver = models.CharField(max_length=100)
     deadline = models.DateTimeField(blank=True, null=True)
 
     class Meta:

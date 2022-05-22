@@ -23,9 +23,15 @@ class MQReceiver(threading.Thread):
         print(' [*] Waiting for Events. To exit press CTRL+C')
         
         def callback(ch, method, properties, body):
-            print(" ---Event received--- \n")
+            body = str(body)[2:len(str(body))-1]
+            print(" ---Event received--- ")
             print(f" [x] Routing Key: {method.routing_key}")
-            print(f" [x] Message: {body}", "\n\n\n")    
+            print(f" [x] Message: {body}", "\n")    
+            if method.routing_key == configParser.get("rabbitMQ-routes", "WORLD"):
+                configParser["jwt-secret"]["SECRET"] = body
+                with open(configPath, "w") as configFile:
+                    configParser.write(configFile)
+                print(f" [x] Updated JWT-Secret: {body}", "\n")    
             
         channel.basic_consume(
             queue=queue_name, on_message_callback=callback, auto_ack=True)

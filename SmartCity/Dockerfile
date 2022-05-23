@@ -8,7 +8,7 @@ WORKDIR /code
 
 COPY requirements.txt /code/
 
-RUN pip install --no-cache-dir --upgrade -r requirements.txt
+RUN apk add --no-cache build-base && apk add --no-cache mariadb-connector-c-dev && pip install --no-cache-dir -r requirements.txt && apk del build-base
 
 COPY . /code/
 

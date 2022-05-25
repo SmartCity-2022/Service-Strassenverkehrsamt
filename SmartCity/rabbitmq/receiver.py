@@ -11,7 +11,15 @@ class MQReceiver(threading.Thread):
         configPath = r'./config/config.cfg'
         configParser.read(configPath)
         connection = pika.BlockingConnection(
-        pika.ConnectionParameters(host=configParser.get("rabbitMQ-configuration", "HOST")))
+            pika.ConnectionParameters(
+                host=configParser["rabbitMQ-configuration"]["host"],
+                port=configParser["rabbitMQ-configuration"]["port"],
+                credentials=pika.PlainCredentials(
+                    configParser["rabbitMQ-configuration"]["user"],
+                    configParser["rabbitMQ-configuration"]["password"]
+                )
+            )
+        )
         channel = connection.channel()
         channel.exchange_declare(exchange=configParser.get("rabbitMQ-configuration", "EXCHANGE"), exchange_type='topic')
 

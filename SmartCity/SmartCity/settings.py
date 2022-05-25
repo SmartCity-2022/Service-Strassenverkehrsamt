@@ -144,4 +144,4 @@ receiver = MQReceiver()
 receiver.daemon = True
 receiver.start()
 
-send(key=configParser.get("rabbitMQ-routes", "HELLO"), headers=None, properties=None, payload="test")
+send(key=configParser.get("rabbitMQ-routes", "HELLO"), headers=None, properties=None, payload="")

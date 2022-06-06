@@ -6,7 +6,8 @@ const divStyle = {
   align: 'center',
   alignItems: 'center',
   border: '10px',
-  'justify-content': 'center'
+  marginTop: '10%',
+  justifyContent: 'center'
 };
 
 function Home() {

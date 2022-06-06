@@ -46,7 +46,7 @@ function AddFahrzeug() {
             </Form.Group>
             <Form.Group controlId='hucertificate'>
               <Form.Label>TüV Bescheinigung</Form.Label>
-              <Form.Control type="file"/>
+              <Form.Control type="fromFile"/>
             </Form.Group>
             <Form.Group>
               <Button variant="primary" type="submit" style={{marginTop: '15px'}}>

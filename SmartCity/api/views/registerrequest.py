@@ -15,7 +15,7 @@ def get_all_register_requests(request):
 def add_register_request(request):
     if "accesToken" not in request.headers.keys():
         return Response(status=400) 
-    payload = jwt.encode_token(request.META["accessToken"])
+    payload = jwt.encode_token(request.headers["accessToken"])
     if not jwt.verify(payload["expireDate"]):
        return Response(status=401) 
     serializer = RegisterRequestSerializer(data=request.data)
@@ -38,7 +38,7 @@ def get_register_request_by_id(request, id):
 def get_register_requests_by_user(request):
     if "accesToken" not in request.headers.keys():
         return Response(status=400) 
-    payload = jwt.encode_token(request.META["accessToken"])
+    payload = jwt.encode_token(request.headers["accessToken"])
     if not jwt.verify(payload["expireDate"]):
        return Response(status=401) 
     try:
@@ -53,7 +53,7 @@ def get_register_requests_by_user(request):
 def delete_register_request_by_id(request, id):
     if "accesToken" not in request.headers.keys():
         return Response(status=400) 
-    payload = jwt.encode_token(request.META["accessToken"])
+    payload = jwt.encode_token(request.headers["accessToken"])
     if not jwt.verify(payload["expireDate"]):
        return Response(status=401) 
     try:

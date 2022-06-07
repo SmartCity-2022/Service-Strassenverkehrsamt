@@ -15,7 +15,7 @@ def get_all_licenses(request):
 def add_license(request):
     if "accesToken" not in request.headers.keys():
         return Response(status=400) 
-    payload = jwt.encode_token(request.META["accessToken"])
+    payload = jwt.encode_token(request.headers["accessToken"])
     if not jwt.verify(payload["expireDate"]):
        return Response(status=401) 
     serializer = LicenseSerializer(data=request.data)
@@ -38,7 +38,7 @@ def get_license_by_id(request, id):
 def get_license_by_user(request):
     if "accesToken" not in request.headers.keys():
         return Response(status=400) 
-    payload = jwt.encode_token(request.META["accessToken"])
+    payload = jwt.encode_token(request.headers["accessToken"])
     if not jwt.verify(payload["expireDate"]):
        return Response(status=401) 
     try:
@@ -53,7 +53,7 @@ def get_license_by_user(request):
 def delete_license_by_id(request, id):
     if "accesToken" not in request.headers.keys():
         return Response(status=400) 
-    payload = jwt.encode_token(request.META["accessToken"])
+    payload = jwt.encode_token(request.headers["accessToken"])
     if not jwt.verify(payload["expireDate"]):
        return Response(status=401) 
     try:

@@ -63,6 +63,7 @@ class Registerrequest(models.Model):
     registration2 = models.CharField(max_length=500)
     vehicle = models.ForeignKey('Vehicle', on_delete=models.CASCADE, db_column='vehicle')
     hucertificate = models.CharField(db_column='huCertificate', max_length=500)  # Field name made lowercase.
+    owner = models.IntegerField()
 
     class Meta:
         managed = False
@@ -79,6 +80,7 @@ class Vehicle(models.Model):
     emissions = models.FloatField()
     hudeadline = models.DateTimeField(blank=True, null=True)
     licenseplate = models.CharField(max_length=10)
+    owner = models.IntegerField()
 
     class Meta:
         managed = False

@@ -8,10 +8,9 @@ export default function ItemCard(props) {
       <Card style={{ width: '18rem', margin: '10px'}}>
         <NavLink className="nav-link" to={props.target}>
         <Card.Img variant="top" src={props.img} width="200px" height="150px"/>
-        {console.log(props.img)}
-              <Card.Body>
-                  <Card.Title>{props.title}</Card.Title>
-                  <Card.Text>{props.description}</Card.Text>
+          <Card.Body>
+            <Card.Title>{props.title}</Card.Title>
+            <Card.Text>{props.description}</Card.Text>
           </Card.Body>
         </NavLink>
       </Card>

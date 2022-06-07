@@ -14,9 +14,9 @@ def get_all_bills(request):
 
 @api_view(["POST"])
 def add_bill(request):
-    if "accesToken" not in request.META.keys():
+    if "accesToken" not in request.headers.keys():
         return Response(status=400) 
-    payload = jwt.encode_token(request.META["accessToken"])
+    payload = jwt.encode_token(request.headers["accessToken"])
     if not jwt.verify(payload["expireDate"]):
         return Response(status=401) 
     serializer = BillSerializer(data=request.data)
@@ -36,9 +36,9 @@ def get_bill_by_id(request, id):
 
 @api_view(["GET"])
 def get_bill_by_user(request):
-    if "accesToken" not in request.META.keys():
+    if "accesToken" not in request.headers.keys():
         return Response(status=400) 
-    payload = jwt.encode_token(request.META["accessToken"])
+    payload = jwt.encode_token(request.headers["accessToken"])
     if not jwt.verify(payload["expireDate"]):
         return Response(status=401) 
     try:
@@ -51,9 +51,9 @@ def get_bill_by_user(request):
 
 @api_view(["DELETE"])
 def delete_bill_by_id(request, id):
-    if "accesToken" not in request.META.keys():
+    if "accesToken" not in request.headers.keys():
         return Response(status=400) 
-    payload = jwt.encode_token(request.META["accessToken"])
+    payload = jwt.encode_token(request.headers["accessToken"])
     if not jwt.verify(payload["expireDate"]):
        return Response(status=401) 
     try:

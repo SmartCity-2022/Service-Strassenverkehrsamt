@@ -13,6 +13,11 @@ def get_all_license_requests(request):
 
 @api_view(["POST"])
 def add_license_request(request):
+    if "accesToken" not in request.headers.keys():
+        return Response(status=400) 
+    payload = jwt.encode_token(request.headers["accessToken"])
+    if not jwt.verify(payload["expireDate"]):
+       return Response(status=401) 
     serializer = LicenseRequestSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
@@ -31,11 +36,13 @@ def get_license_request_by_id(request, id):
 
 @api_view(["GET"])
 def get_license_requests_by_user(request):
-    
-    # TODO: Verify user by token from request first
-    
+    if "accesToken" not in request.headers.keys():
+        return Response(status=400) 
+    payload = jwt.encode_token(request.headers["accessToken"])
+    if not jwt.verify(payload["expireDate"]):
+       return Response(status=401) 
     try:
-        requests = Licenserequest.objects.filter(owner=request.owner)    
+        requests = Licenserequest.objects.filter(citizen=payload["email"])    
     except Licenserequest.DoesNotExist:
         return Response(status=404)        
     serializer = LicenseRequestSerializer(requests, many=True)
@@ -44,9 +51,11 @@ def get_license_requests_by_user(request):
 
 @api_view(["DELETE"])
 def delete_license_request_by_id(request, id):
-    
-    # TODO: Verify user by token from request first
-    
+    if "accesToken" not in request.headers.keys():
+        return Response(status=400) 
+    payload = jwt.encode_token(request.headers["accessToken"])
+    if not jwt.verify(payload["expireDate"]):
+       return Response(status=401) 
     try:
         licenserequest = Licenserequest.objects.get(pk=id)    
     except Licenserequest().DoesNotExist:

@@ -13,6 +13,11 @@ def get_all_register_requests(request):
 
 @api_view(["POST"])
 def add_register_request(request):
+    if "accesToken" not in request.headers.keys():
+        return Response(status=400) 
+    payload = jwt.encode_token(request.META["accessToken"])
+    if not jwt.verify(payload["expireDate"]):
+       return Response(status=401) 
     serializer = RegisterRequestSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
@@ -31,11 +36,13 @@ def get_register_request_by_id(request, id):
 
 @api_view(["GET"])
 def get_register_requests_by_user(request):
-    
-    # TODO: Verify user by token from request first
-    
+    if "accesToken" not in request.headers.keys():
+        return Response(status=400) 
+    payload = jwt.encode_token(request.META["accessToken"])
+    if not jwt.verify(payload["expireDate"]):
+       return Response(status=401) 
     try:
-        requests = Registerrequest.objects.filter(owner=request.owner)    
+        requests = Registerrequest.objects.filter(owner=payload["email"])    
     except Registerrequest.DoesNotExist:
         return Response(status=404)        
     serializer = RegisterRequestSerializer(requests, many=True)
@@ -44,9 +51,11 @@ def get_register_requests_by_user(request):
 
 @api_view(["DELETE"])
 def delete_register_request_by_id(request, id):
-    
-    # TODO: Verify user by token from request first
-    
+    if "accesToken" not in request.headers.keys():
+        return Response(status=400) 
+    payload = jwt.encode_token(request.META["accessToken"])
+    if not jwt.verify(payload["expireDate"]):
+       return Response(status=401) 
     try:
         registerrequest = Registerrequest.objects.get(pk=id)    
     except Registerrequest.DoesNotExist:

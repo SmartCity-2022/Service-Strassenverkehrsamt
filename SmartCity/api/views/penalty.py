@@ -15,7 +15,7 @@ def get_all_penaltys(request):
 def add_penalty(request):
     if "accesToken" not in request.headers.keys():
         return Response(status=400) 
-    payload = jwt.encode_token(request.META["accessToken"])
+    payload = jwt.encode_token(request.headers["accessToken"])
     if not jwt.verify(payload["expireDate"]):
        return Response(status=401) 
     serializer = PenaltySerializer(data=request.data)

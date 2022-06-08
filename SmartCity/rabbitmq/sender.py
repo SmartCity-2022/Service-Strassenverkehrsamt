@@ -22,7 +22,7 @@ def send(key=str, headers=list, properties=pika.spec.BasicProperties, payload=by
     )
     channel = connection.channel()
 
-    channel.exchange_declare(exchange=configParser.get("rabbitMQ-configuration", "exchange"), exchange_type='topic')
+    channel.exchange_declare(exchange=configParser.get("rabbitMQ-configuration", "exchange"), exchange_type='topic', durable=true)
 
     routing_key = key
     channel.basic_publish(

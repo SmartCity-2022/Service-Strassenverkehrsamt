@@ -21,7 +21,7 @@ class MQReceiver(threading.Thread):
             )
         )
         channel = connection.channel()
-        channel.exchange_declare(exchange=configParser.get("rabbitMQ-configuration", "EXCHANGE"), exchange_type='topic')
+        channel.exchange_declare(exchange=configParser.get("rabbitMQ-configuration", "EXCHANGE"), exchange_type='topic', durable=true)
 
         result = channel.queue_declare('', exclusive=True)
         queue_name = result.method.queue

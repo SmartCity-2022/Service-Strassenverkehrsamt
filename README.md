@@ -1,3 +1,4 @@
+![GitHub tag (latest SemVer)](https://shields.herrvergesslich.de/github/v/tag/smartcity-2022/service-strassenverkehrsamt?label=Version)
 # Service-Strassenverkehrsamt
 ## How to run
 

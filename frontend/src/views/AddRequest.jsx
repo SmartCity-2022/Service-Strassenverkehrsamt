@@ -14,7 +14,7 @@ function AddRequest() {
       <Form style={{margin: '50px'}}>
         <Form.Group controlId='class'>
             <Form.Select aria-label="class" controlId='class'>
-              <option>Kraftstoffart des Fahrzeuges</option>
+              <option>Führerscheinklasse</option>
               <option value="1">AM</option>
               <option value="2">A1</option>
               <option value="3">A2</option>

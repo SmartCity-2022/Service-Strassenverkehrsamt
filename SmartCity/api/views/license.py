@@ -1,6 +1,7 @@
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from stva.models import License
+from api.jwt import verify, read_payload
 from ..serializers import LicenseSerializer
 
 
@@ -13,11 +14,8 @@ def get_all_licenses(request):
 
 @api_view(["POST"])
 def add_license(request):
-    if "accesToken" not in request.headers.keys():
-        return Response(status=400) 
-    payload = jwt.encode_token(request.headers["accessToken"])
-    if not jwt.verify(payload["expireDate"]):
-       return Response(status=401) 
+    if not verify(request):
+        return Response(status=400)
     serializer = LicenseSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
@@ -36,12 +34,10 @@ def get_license_by_id(request, id):
 
 @api_view(["GET"])
 def get_license_by_user(request):
-    if "accesToken" not in request.headers.keys():
-        return Response(status=400) 
-    payload = jwt.encode_token(request.headers["accessToken"])
-    if not jwt.verify(payload["expireDate"]):
-       return Response(status=401) 
+    if not verify(request):
+        return Response(status=400)
     try:
+        payload = read_payload(request)
         licenses = License.objects.filter(owner=payload["email"])    
     except License.DoesNotExist:
         return Response(status=404)        
@@ -51,11 +47,8 @@ def get_license_by_user(request):
 
 @api_view(["DELETE"])
 def delete_license_by_id(request, id):
-    if "accesToken" not in request.headers.keys():
-        return Response(status=400) 
-    payload = jwt.encode_token(request.headers["accessToken"])
-    if not jwt.verify(payload["expireDate"]):
-       return Response(status=401) 
+    if not verify(request):
+        return Response(status=400)
     try:
         license = License.objects.get(pk=id)    
     except License.DoesNotExist:

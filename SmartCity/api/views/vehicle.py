@@ -13,11 +13,8 @@ def get_all_vehicles(request):
 
 @api_view(["POST"])
 def add_vehicle(request):
-    if "accesToken" not in request.headers.keys():
-        return Response(status=400) 
-    payload = jwt.encode_token(request.headers["accessToken"])
-    if not jwt.verify(payload["expireDate"]):
-       return Response(status=401) 
+    if not verify(request):
+        return Response(status=400)
     serializer = VehicleSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
@@ -36,11 +33,8 @@ def get_vehicle_by_id(request, id):
 
 @api_view(["GET"])
 def get_vehicle_by_user(request):
-    if "accesToken" not in request.headers.keys():
-        return Response(status=400) 
-    payload = jwt.encode_token(request.headers["accessToken"])
-    if not jwt.verify(payload["expireDate"]):
-       return Response(status=401) 
+    if not verify(request):
+        return Response(status=400)
     try:
         vehicles = Vehicle.objects.filter(owner=payload["email"])    
     except Vehicle.DoesNotExist:
@@ -51,11 +45,8 @@ def get_vehicle_by_user(request):
 
 @api_view(["DELETE"])
 def delete_vehicle_by_id(request, id):
-    if "accesToken" not in request.headers.keys():
-        return Response(status=400) 
-    payload = jwt.encode_token(request.headers["accessToken"])
-    if not jwt.verify(payload["expireDate"]):
-       return Response(status=401) 
+    if not verify(request):
+        return Response(status=400)
     try:
         vehicle = Vehicle.objects.get(pk=id)    
     except Vehicle.DoesNotExist:

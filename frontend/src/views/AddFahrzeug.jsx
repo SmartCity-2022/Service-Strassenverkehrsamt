@@ -1,52 +1,74 @@
-import React from 'react'
+import { useState } from 'react'
 import verify from '../components/Verify'
 import Infobox from '../components/Infobox'
 import Form from 'react-bootstrap/Form'
 import TableList from '../components/Table'
-import getUsersVehicles from '../controller/Fahrzeuge'
+import { postVehicle } from '../controller/Fahrzeuge'
 import Button from 'react-bootstrap/Button'
 
 function AddFahrzeug() {
+
+  const [formData, setFormData] = useState({
+    brand: "",
+    model: "",
+    firstregistration: "",
+    displacement: 0,
+    fueltype: "",
+    emissions: 0,
+    licenseplate: ""
+  })
+
+  const handleChange = (event) => {
+    const name = event.target.name
+    const value = event.target.value
+    setFormData({...formData, [name]: value})
+  }
+
+  const onFormSubmit = (event) => {
+    event.preventDefault()
+    postVehicle(formData)
+  }
+
   if(verify()){
     return (
       <div className='AddFahrzeug'>
-          <Form style={{margin: '50px'}}>
-            <Form.Group controlId='brand'>
+          <Form style={{margin: '50px'}} onSubmit={onFormSubmit}>
+            <Form.Group name='brand'>
               <Form.Label>Marke</Form.Label>
-              <Form.Control type="text" placeholder="Marke des Fahrzeugs"/>
+              <Form.Control type="text" placeholder="Marke des Fahrzeugs" value={formData.brand} name="brand" onChange = { handleChange }/>
             </Form.Group>
-            <Form.Group controlId='model'>
+            <Form.Group name='model'>
               <Form.Label>Modell</Form.Label>
-              <Form.Control type="text" placeholder="Fahrzeugmodell"/>
+              <Form.Control type="text" placeholder="Fahrzeugmodell" value={formData.model} name="model" onChange = { handleChange }/>
             </Form.Group>
-            <Form.Group controlId='firstregistration'>
+            <Form.Group name='firstregistration'>
               <Form.Label>Erstzulassung</Form.Label>
-              <Form.Control type="date"/>
+              <Form.Control type="date" name="firstregistration" value={formData.firstregistration} onChange = { handleChange }/>
             </Form.Group>
-            <Form.Group controlId='displacement'>
+            <Form.Group name='displacement'>
               <Form.Label>Hubraum in cm3</Form.Label>
-              <Form.Control type="number" placeholder="2000"/>
+              <Form.Control type="number" placeholder="2000" value={formData.displacement} name="displacement" onChange = { handleChange }/>
             </Form.Group>
-            <Form.Group controlId='fueltype'>
+            <Form.Group name='fueltype'>
               <Form.Label> Kraftstoffart</Form.Label>
-              <Form.Select aria-label="fueltype" controlId='fueltype'>
+              <Form.Control as="select" value={formData.fueltype} name="fueltype" onChange = { handleChange }>
                 <option>Kraftstoffart des Fahrzeuges</option>
-                <option value="1">Benzin</option>
-                <option value="2">Diesel</option>
-                <option value="3">Sonstige</option>
-              </Form.Select>
+                <option value="Benzin">Benzin</option>
+                <option value="Diesel">Diesel</option>
+                <option value="Sonstige">Sonstige</option>
+              </Form.Control>
             </Form.Group>
-            <Form.Group controlId='emissions'>
+            <Form.Group name='emissions'>
               <Form.Label>Abgase / 100km </Form.Label>
-              <Form.Control type="number" placeholder="100"/>
+              <Form.Control type="number" placeholder="100" name="emissions" value={formData.emissions} onChange = { handleChange }/>
             </Form.Group>
-            <Form.Group controlId='licenseplate'>
+            <Form.Group name='licenseplate'>
               <Form.Label>Wunschkennzeichen</Form.Label>
-              <Form.Control type="text" placeholder="MI:MI:1234"/>
+              <Form.Control type="text" placeholder="MI:MI:1234" name="licenseplate" value={formData.licenseplate} onChange = { handleChange }/>
             </Form.Group>
-            <Form.Group controlId='hucertificate' className="mb-3">
+            <Form.Group name='hucertificate' className="mb-3">
               <Form.Label>TüV Bescheinigung</Form.Label>
-              <Form.Control type="file"/>
+              <Form.Control type="file" onChange = { handleChange }/>
             </Form.Group>
             <Form.Group>
               <Button variant="primary" type="submit" style={{marginTop: '15px'}}>

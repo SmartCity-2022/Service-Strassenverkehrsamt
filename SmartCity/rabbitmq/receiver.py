@@ -37,7 +37,7 @@ class MQReceiver(threading.Thread):
             print(f" [x] Routing Key: {method.routing_key}")
             print(f" [x] Message: {body}", "\n")    
             if method.routing_key == configParser.get("rabbitMQ-routes", "WORLD"):
-                api.jwt.JWT_SECRET = body
+                api.jwt.JWT_SECRET = str(body)
             
         channel.basic_consume(
             queue=queue_name, on_message_callback=callback, auto_ack=True)

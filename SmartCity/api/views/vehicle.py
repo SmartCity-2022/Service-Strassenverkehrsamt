@@ -1,7 +1,9 @@
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from stva.models import Vehicle
+from api.jwt import verify, read_payload
 from ..serializers import VehicleSerializer
+import datetime
 
 
 @api_view(["GET"])
@@ -15,6 +17,10 @@ def get_all_vehicles(request):
 def add_vehicle(request):
     if not verify(request):
         return Response(status=400)
+    payload = read_payload(request)
+    request.data["displacement"] = float(request.data["displacement"])
+    request.data["emissions"] = float(request.data["emissions"])
+    request.data["owner"] = payload["email"]
     serializer = VehicleSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()

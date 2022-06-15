@@ -80,7 +80,7 @@ class Vehicle(models.Model):
     emissions = models.FloatField()
     hudeadline = models.DateTimeField(blank=True, null=True)
     licenseplate = models.CharField(max_length=10)
-    owner = models.IntegerField()
+    owner = models.CharField(max_length=100)
 
     class Meta:
         managed = False

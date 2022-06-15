@@ -3,16 +3,16 @@ import datetime
 import urllib3
 
 
-JWT_SECRET = None
+JWT_SECRET = "1"
 
 
 def read_payload(request):
-    return jwt.decode(request.cookies.get("accessToken"), JWT_SECRET, algorithms=["HS256"])
+    return jwt.decode(request.COOKIES.get("accessToken"), JWT_SECRET, algorithms=["HS256"])
 
 
 def verify(request):
-    access = request.cookies.get("accessToken")
-    refresh = request.cookies.get("refreshToken")
+    access = request.COOKIES.get("accessToken")
+    refresh = request.COOKIES.get("refreshToken")
     
     if refresh is None or access is None:
         return False

@@ -17,6 +17,7 @@ def add_register_request(request):
     status = verify(request)
     if status != 200:
         return Response(status=status)
+    request.data["status"] = "In Bearbeitung"
     serializer = RegisterRequestSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()

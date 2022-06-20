@@ -1,7 +1,15 @@
 import axios from 'axios'
 
-export default async function getUsersVehicles(){
+export async function getUsersVehicles(){
     const URL = process.env.REACT_APP_BACKEND_URL + 'vehicle/user/'
+    return await axios.get(URL, {withCredentials: true}).then(response =>{
+        const isResponse = response.data && response.data.length
+        return isResponse ? response.data : []
+    })
+}
+
+export async function getUsersRegisterRequests(){
+    const URL = process.env.REACT_APP_BACKEND_URL + 'registerrequest/user/'
     return await axios.get(URL, {withCredentials: true}).then(response =>{
         const isResponse = response.data && response.data.length
         return isResponse ? response.data : []

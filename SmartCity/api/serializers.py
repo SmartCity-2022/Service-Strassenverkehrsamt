@@ -17,7 +17,7 @@ class LicenseSerializer(serializers.ModelSerializer):
 class LicenseRequestSerializer(serializers.ModelSerializer):
     class Meta:
         model = Licenserequest
-        fields = ["citizen", "form", "issued"]
+        fields = ["citizen", "form", "issued", "licenseclass", "status"]
         
         
 class PenaltySerializer(serializers.ModelSerializer):
@@ -29,7 +29,7 @@ class PenaltySerializer(serializers.ModelSerializer):
 class RegisterRequestSerializer(serializers.ModelSerializer):
     class Meta:
         model = Registerrequest
-        fields = ["registration1", "registration2", "vehicle", "huCertificate"]
+        fields = ["registration1", "registration2", "vehicle", "huCertificate", "status", "owner"]
         
         
 class VehicleSerializer(serializers.ModelSerializer):

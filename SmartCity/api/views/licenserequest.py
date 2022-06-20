@@ -17,9 +17,13 @@ def add_license_request(request):
     status = verify(request)
     if status != 200:
         return Response(status=status)
+    payload = read_payload(request)
+    request.data["citizen"] = payload["email"]
+    request.data["status"] = "In Bearbeitung"
     serializer = LicenseRequestSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
+    print(request.data, serializer.data)
     return Response(serializer.data)
 
 

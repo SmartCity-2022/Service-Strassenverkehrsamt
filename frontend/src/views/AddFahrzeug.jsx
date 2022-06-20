@@ -78,6 +78,14 @@ function AddFahrzeug() {
               <Form.Label>Wunschkennzeichen</Form.Label>
               <Form.Control type="text" placeholder="MI:MI:1234" name="licenseplate" value={formData.licenseplate} onChange = { handleChange }/>
             </Form.Group>
+            <Form.Group name='registration1' className="mb-3">
+              <Form.Label>Fahrzeugbrief</Form.Label>
+              <Form.Control type="file" onChange = { handleChange }/>
+            </Form.Group>
+            <Form.Group name='registration2' className="mb-3">
+              <Form.Label>Fahrzeugschein</Form.Label>
+              <Form.Control type="file" onChange = { handleChange }/>
+            </Form.Group>
             <Form.Group name='hucertificate' className="mb-3">
               <Form.Label>TüV Bescheinigung</Form.Label>
               <Form.Control type="file" onChange = { handleChange }/>

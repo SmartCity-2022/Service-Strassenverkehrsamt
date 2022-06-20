@@ -2,17 +2,26 @@ import React from 'react'
 import verify from '../components/Verify'
 import Infobox from '../components/Infobox'
 import TableList from '../components/Table'
-import getUsersPenaltys from '../controller/StVO'
+import {getUsersPenaltys, getUsersBills} from '../controller/StVO'
+import Tabs from 'react-bootstrap/Tabs'
+import Tab from 'react-bootstrap/Tab'
 
 
 function StVO() {
-  const [data, setData] = React.useState([])
-  React.useEffect(() => { fetch_vehicles() }, [])
+  const [penaltys, setPenaltys] = React.useState([])
+  React.useEffect(() => { fetch_penaltys() }, [])
 
-  const fetch_vehicles = async () => {
-      setData(await getUsersPenaltys())
+  const fetch_penaltys = async () => {
+      setPenaltys(await getUsersPenaltys())
   }
   
+  const [bills, setBills] = React.useState([])
+  React.useEffect(() => { fetch_bills() }, [])
+
+  const fetch_bills= async () => {
+      setBills(await getUsersBills())
+  }
+
   const[verified, setVerified] = React.useState([])
   React.useEffect(() => setVerified(fetch_verified()), [])
 
@@ -24,7 +33,14 @@ function StVO() {
 
     return (
       <div className='StVO'>
-        <TableList style={{marginTop: '60px'}} data={data} exception='Sie sind nicht im Straßenverkehr aufgefallen.' heads={['#', 'Ausstellung', 'Strafe', 'Beschreibung']}/>
+      <Tabs defaultActiveKey="penaltys" id="tabs" className="mb-3">
+        <Tab eventKey="penaltys" title="Straftaten">
+          <TableList style={{marginTop: '60px'}} data={penaltys} exception='Sie sind nicht im Straßenverkehr aufgefallen.'/>
+        </Tab>
+        <Tab eventKey="bills" title="Rechnungen">
+          <TableList style={{marginTop: '60px'}} data={bills} exception='Sie haben keine Rechnungen beim Straßenverkehrsamt.'/>
+        </Tab>
+      </Tabs>
       </div>
     )
   }

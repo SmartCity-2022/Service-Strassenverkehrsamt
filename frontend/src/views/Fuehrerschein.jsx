@@ -2,17 +2,26 @@ import React from 'react'
 import verify from '../components/Verify'
 import Infobox from '../components/Infobox'
 import TableList from '../components/Table'
-import getUsersLicenses from '../controller/Fuehrerschein'
+import {getUsersLicenses, getUsersLicenseRequests} from '../controller/Fuehrerschein'
 import Button from 'react-bootstrap/Button'
 import { NavLink } from "react-router-dom";
+import Tabs from 'react-bootstrap/Tabs'
+import Tab from 'react-bootstrap/Tab'
 
 
 function Fuehrerschein() {
-  const [data, setData] = React.useState([])
-  React.useEffect(() => { fetch_vehicles() }, [])
+  const [licenses, setLicenses] = React.useState([])
+  React.useEffect(() => { fetch_licenses() }, [])
 
-  const fetch_vehicles = async () => {
-      setData(await getUsersLicenses())
+  const fetch_licenses = async () => {
+      setLicenses(await getUsersLicenses())
+  }
+  
+  const [requests, setRequests] = React.useState([])
+  React.useEffect(() => { fetch_requests() }, [])
+
+  const fetch_requests = async () => {
+      setRequests(await getUsersLicenseRequests())
   }
   
   const[verified, setVerified] = React.useState([])
@@ -29,7 +38,14 @@ function Fuehrerschein() {
         <NavLink to="../Fuehrerscheinanfrage">
         <Button variant='primary' style={{marginLeft: '50px', marginTop: '50px', marginBottom:'10px'}}>Führerschein Antrag erstellen</Button>
         </NavLink>
-        <TableList data={data} exception='Sie haben keine Führerscheine oder Führerscheinanträge.' heads={['#', 'Klasse', 'Ausstellung']}/>
+        <Tabs defaultActiveKey="licenses" id="tabs" className="mb-3">
+          <Tab eventKey="licenses" title="Führerscheine">
+            <TableList data={licenses} exception='Sie haben keine Führerscheine.'/>
+          </Tab>
+          <Tab eventKey="requests" title="Führerschein Anträge">
+            <TableList data={requests} exception='Sie haben keine offenen Führerscheinanträge.'/>
+          </Tab>
+        </Tabs>
       </div>
     )
   }

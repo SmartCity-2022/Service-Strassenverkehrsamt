@@ -2,6 +2,7 @@ import pika
 import sys
 import configparser
 import threading
+import api.jwt
 
 class MQReceiver(threading.Thread):
     
@@ -36,10 +37,7 @@ class MQReceiver(threading.Thread):
             print(f" [x] Routing Key: {method.routing_key}")
             print(f" [x] Message: {body}", "\n")    
             if method.routing_key == configParser.get("rabbitMQ-routes", "WORLD"):
-                configParser["jwt-secret"]["SECRET"] = body
-                with open(configPath, "w") as configFile:
-                    configParser.write(configFile)
-                print(f" [x] Updated JWT-Secret: {body}", "\n")    
+                api.jwt.JWT_SECRET = str(body)
             
         channel.basic_consume(
             queue=queue_name, on_message_callback=callback, auto_ack=True)

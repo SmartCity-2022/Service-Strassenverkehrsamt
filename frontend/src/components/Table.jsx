@@ -2,8 +2,9 @@ import React from "react";
 import Table from 'react-bootstrap/Table'
 import Infobox from "./Infobox";
 
+
 export default function TableList(props){
-    if(!Array.isArray(props.data)){
+    if(props.data.length <= 0){
         return (
             <Infobox variant='info' text={props.exception}/>
         )
@@ -11,20 +12,22 @@ export default function TableList(props){
     return(
         <Table>
             <thead>
-                {
-                    props.heads.map(head =>(
-                        <th>{head}</th>
-                    ))
-                }
+                <tr>
+                    {
+                        Object.entries(props.data[0]).map(
+                            ([key, value]) => <th>{key}</th>
+                        )
+                    }
+                </tr>
             </thead>
             <tbody>
                 {
-                    props.data.map(set =>(
-                        <tr>
+                    props.data.map((set) =>(
+                        <tr key={set.id}>
                             {
-                                set.map(row =>(
-                                    <td>{ row }</td>
-                                ))
+                                Object.entries(set).map(
+                                    ([key, value]) => <td>{value}</td>
+                                )
                             }
                         </tr>
                     ))

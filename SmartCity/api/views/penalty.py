@@ -1,6 +1,7 @@
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from stva.models import Penalty
+from api.jwt import verify, read_payload
 from ..serializers import PenaltySerializer
 
 
@@ -13,11 +14,9 @@ def get_all_penaltys(request):
 
 @api_view(["POST"])
 def add_penalty(request):
-    if "accesToken" not in request.headers.keys():
-        return Response(status=400) 
-    payload = jwt.encode_token(request.headers["accessToken"])
-    if not jwt.verify(payload["expireDate"]):
-       return Response(status=401) 
+    status = verify(request)
+    if status != 200:
+        return Response(status=status)
     serializer = PenaltySerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
@@ -36,12 +35,11 @@ def get_penalty_by_id(request, id):
 
 @api_view(["GET"])
 def get_penalty_by_user(request):
-    if "accesToken" not in request.headers.keys():
-        return Response(status=400) 
-    payload = jwt.encode_token(request.headers["accessToken"])
-    if not jwt.verify(payload["expireDate"]):
-       return Response(status=401) 
+    status = verify(request)
+    if status != 200:
+        return Response(status=status)
     try:
+        payload = read_payload(request)
         penalty = Penalty.objects.filter(owner=payload["email"])    
     except Penalty.DoesNotExist:
         return Response(status=404)        
@@ -51,11 +49,9 @@ def get_penalty_by_user(request):
 
 @api_view(["DELETE"])
 def delete_penalty_by_id(request, id):
-    if "accesToken" not in request.headers.keys():
-        return Response(status=400) 
-    payload = jwt.encode_token(request.headers["accessToken"])
-    if not jwt.verify(payload["expireDate"]):
-       return Response(status=401) 
+    status = verify(request)
+    if status != 200:
+        return Response(status=status)
     try:
         penalty = Penalty.objects.get(pk=id)    
     except Penalty.DoesNotExist:

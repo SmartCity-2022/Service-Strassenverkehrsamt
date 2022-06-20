@@ -35,5 +35,5 @@ class RegisterRequestSerializer(serializers.ModelSerializer):
 class VehicleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Vehicle
-        fields = ["brand", "model", "firstregistration", "displacement", "fueltype", "emissions", "hudeadline"]
+        fields = ["brand", "model", "firstregistration", "displacement", "fueltype", "emissions", "hudeadline", "licenseplate", "owner"]
         

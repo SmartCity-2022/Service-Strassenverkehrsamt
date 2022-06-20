@@ -1,7 +1,9 @@
-export default function verify(){
-    // TODO: Actual verification
-    if(true){
-        return true;
-    } 
-    return false;
+import axios from 'axios'
+
+
+export default async function verify(){
+    const URL = process.env.REACT_APP_BACKEND_URL + 'auth'
+    return await axios.get(URL, {withCredentials: true}).then(response =>{
+        return response.data.auth
+    })
 }

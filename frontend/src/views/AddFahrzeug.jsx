@@ -2,11 +2,14 @@ import { useState } from 'react'
 import verify from '../components/Verify'
 import Infobox from '../components/Infobox'
 import Form from 'react-bootstrap/Form'
-import TableList from '../components/Table'
 import { postVehicle } from '../controller/Fahrzeuge'
 import Button from 'react-bootstrap/Button'
+import React from 'react'
+import { useNavigate } from "react-router-dom"
 
 function AddFahrzeug() {
+
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     brand: "",
@@ -27,9 +30,18 @@ function AddFahrzeug() {
   const onFormSubmit = (event) => {
     event.preventDefault()
     postVehicle(formData)
+    navigate("/Fahrzeuge")
   }
 
-  if(verify()){
+  const[verified, setVerified] = React.useState([])
+  React.useEffect(() => setVerified(fetch_verified()), [])
+
+  const fetch_verified = async () => {
+    setVerified(await verify())
+  }
+
+  if(verified){
+
     return (
       <div className='AddFahrzeug'>
           <Form style={{margin: '50px'}} onSubmit={onFormSubmit}>

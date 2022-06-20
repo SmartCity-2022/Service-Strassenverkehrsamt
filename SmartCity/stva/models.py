@@ -24,7 +24,7 @@ class Bill(models.Model):
 
 class License(models.Model):
     id = models.IntegerField(primary_key=True, auto_created=True)
-    owner = models.IntegerField()
+    owner = models.CharField(max_length=100)
     type = models.CharField(max_length=10)
     received = models.DateTimeField(auto_now_add=True)
 
@@ -35,7 +35,7 @@ class License(models.Model):
 
 class Licenserequest(models.Model):
     id = models.IntegerField(primary_key=True, auto_created=True)
-    citizen = models.IntegerField()
+    citizen = models.CharField(max_length=100)
     form = models.CharField(max_length=500)
     issued = models.DateTimeField(auto_now_add=True)
     
@@ -47,7 +47,7 @@ class Licenserequest(models.Model):
 
 class Penalty(models.Model):
     id = models.IntegerField(primary_key=True, auto_created=True)
-    owner = models.IntegerField()
+    owner = models.CharField(max_length=100)
     received = models.DateTimeField(auto_now_add=True)
     value = models.IntegerField()
     reason = models.CharField(max_length=100)
@@ -63,7 +63,7 @@ class Registerrequest(models.Model):
     registration2 = models.CharField(max_length=500)
     vehicle = models.ForeignKey('Vehicle', on_delete=models.CASCADE, db_column='vehicle')
     hucertificate = models.CharField(db_column='huCertificate', max_length=500)  # Field name made lowercase.
-    owner = models.IntegerField()
+    owner = models.CharField(max_length=100)
 
     class Meta:
         managed = False

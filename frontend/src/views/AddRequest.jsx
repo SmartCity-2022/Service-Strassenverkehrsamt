@@ -2,13 +2,23 @@ import React from 'react'
 import verify from '../components/Verify'
 import Infobox from '../components/Infobox'
 import Form from 'react-bootstrap/Form'
-import TableList from '../components/Table'
-import getUsersLicenses from '../controller/Fuehrerschein'
 import Button from 'react-bootstrap/Button'
+import { useNavigate } from "react-router-dom"
 
 
 function AddRequest() {
-  if(verify()){
+
+  const navigate = useNavigate();
+
+  const[verified, setVerified] = React.useState([])
+  React.useEffect(() => setVerified(fetch_verified()), [])
+
+  const fetch_verified = async () => {
+    setVerified(await verify())
+  }
+
+  if(verified){
+
     return (
       <div className='AddRequest'>
       <Form style={{margin: '50px'}}>

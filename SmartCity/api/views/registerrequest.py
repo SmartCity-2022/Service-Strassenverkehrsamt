@@ -14,8 +14,9 @@ def get_all_register_requests(request):
 
 @api_view(["POST"])
 def add_register_request(request):
-    if not verify(request):
-        return Response(status=400)
+    status = verify(request)
+    if status != 200:
+        return Response(status=status)
     serializer = RegisterRequestSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
@@ -34,8 +35,9 @@ def get_register_request_by_id(request, id):
 
 @api_view(["GET"])
 def get_register_requests_by_user(request):
-    if not verify(request):
-        return Response(status=400)
+    status = verify(request)
+    if status != 200:
+        return Response(status=status)
     try:
         payload = read_payload(request)
         requests = Registerrequest.objects.filter(owner=payload["email"])    
@@ -47,8 +49,9 @@ def get_register_requests_by_user(request):
 
 @api_view(["DELETE"])
 def delete_register_request_by_id(request, id):
-    if not verify(request):
-        return Response(status=400)
+    status = verify(request)
+    if status != 200:
+        return Response(status=status)
     try:
         registerrequest = Registerrequest.objects.get(pk=id)    
     except Registerrequest.DoesNotExist:

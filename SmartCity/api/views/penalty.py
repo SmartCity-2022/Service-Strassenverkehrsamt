@@ -14,8 +14,9 @@ def get_all_penaltys(request):
 
 @api_view(["POST"])
 def add_penalty(request):
-    if not verify(request):
-        return Response(status=400)
+    status = verify(request)
+    if status != 200:
+        return Response(status=status)
     serializer = PenaltySerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
@@ -34,8 +35,9 @@ def get_penalty_by_id(request, id):
 
 @api_view(["GET"])
 def get_penalty_by_user(request):
-    if not verify(request):
-        return Response(status=400)
+    status = verify(request)
+    if status != 200:
+        return Response(status=status)
     try:
         payload = read_payload(request)
         penalty = Penalty.objects.filter(owner=payload["email"])    
@@ -47,8 +49,9 @@ def get_penalty_by_user(request):
 
 @api_view(["DELETE"])
 def delete_penalty_by_id(request, id):
-    if not verify(request):
-        return Response(status=400)
+    status = verify(request)
+    if status != 200:
+        return Response(status=status)
     try:
         penalty = Penalty.objects.get(pk=id)    
     except Penalty.DoesNotExist:

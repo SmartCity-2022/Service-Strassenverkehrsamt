@@ -15,7 +15,7 @@ def verify(request):
     refresh = request.COOKIES.get("refreshToken")
     
     if refresh is None or access is None:
-        return False
+        return 401
     
     try:
         access_payload = jwt.decode(access, JWT_SECRET, algorithms=["HS256"])
@@ -28,5 +28,5 @@ def verify(request):
             refresh_decode = jwt.decode(token, os.environ.get("SECRET"), algorithms=["HS256"])
             request.state.email = refresh_decode.get("email")
         except:
-            return False
-    return True
+            return 403
+    return 200

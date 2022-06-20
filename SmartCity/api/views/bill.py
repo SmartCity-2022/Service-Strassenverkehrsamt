@@ -14,8 +14,9 @@ def get_all_bills(request):
 
 @api_view(["POST"])
 def add_bill(request):
-    if not verify(request):
-        return Response(status=400)
+    status = verify(request)
+    if status != 200:
+        return Response(status=status)
     payload = read_payload(request)
     serializer = BillSerializer(data=request.data)
     if serializer.is_valid():
@@ -34,8 +35,9 @@ def get_bill_by_id(request, id):
 
 @api_view(["GET"])
 def get_bill_by_user(request):
-    if not verify(request):
-        return Response(status=400)
+    status = verify(request)
+    if status != 200:
+        return Response(status=status)
     try:
         payload = read_payload(request)
         bills = Bill.objects.filter(receiver=payload["email"])    
@@ -47,8 +49,9 @@ def get_bill_by_user(request):
 
 @api_view(["DELETE"])
 def delete_bill_by_id(request, id):
-    if not verify(request):
-        return Response(status=400)
+    status = verify(request)
+    if status != 200:
+        return Response(status=status)
     
     try:
         payload = read_payload(request)

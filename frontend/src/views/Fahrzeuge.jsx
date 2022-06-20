@@ -7,13 +7,23 @@ import Button from 'react-bootstrap/Button'
 import { NavLink } from "react-router-dom"
 
 function Fahrzeuge() {
+
   const [data, setData] = React.useState([])
   React.useEffect(() => { fetch_vehicles() }, [])
 
   const fetch_vehicles = async () => {
       setData(await getUsersVehicles())
   }
-  if(verify()){
+
+  const[verified, setVerified] = React.useState([])
+  React.useEffect(() => setVerified(fetch_verified()), [])
+
+  const fetch_verified = async () => {
+    setVerified(await verify())
+  }
+
+  if(verified){
+
     return (
       <div className='Fahrzeuge'>
         <NavLink to="../Neuanmeldung">

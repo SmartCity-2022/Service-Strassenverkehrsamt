@@ -5,17 +5,26 @@ import TableList from '../components/Table'
 import getUsersPenaltys from '../controller/StVO'
 
 
-async function getData(){
-  const penaltys = await getUsersPenaltys()
-  return penaltys
-}
-
-
 function StVO() {
-  if(verify()){
+  const [data, setData] = React.useState([])
+  React.useEffect(() => { fetch_vehicles() }, [])
+
+  const fetch_vehicles = async () => {
+      setData(await getUsersPenaltys())
+  }
+  
+  const[verified, setVerified] = React.useState([])
+  React.useEffect(() => setVerified(fetch_verified()), [])
+
+  const fetch_verified = async () => {
+    setVerified(await verify())
+  }
+
+  if(verified){
+
     return (
       <div className='StVO'>
-        <TableList style={{marginTop: '60px'}} data={getData()} exception='Sie sind nicht im Straßenverkehr aufgefallen.' heads={['#', 'Ausstellung', 'Strafe', 'Beschreibung']}/>
+        <TableList style={{marginTop: '60px'}} data={data} exception='Sie sind nicht im Straßenverkehr aufgefallen.' heads={['#', 'Ausstellung', 'Strafe', 'Beschreibung']}/>
       </div>
     )
   }

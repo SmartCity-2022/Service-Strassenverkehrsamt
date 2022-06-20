@@ -7,20 +7,29 @@ import Button from 'react-bootstrap/Button'
 import { NavLink } from "react-router-dom";
 
 
-async function getData(){
-  const licenses = await getUsersLicenses()
-  return licenses
-}
-
-
 function Fuehrerschein() {
-  if(verify()){
+  const [data, setData] = React.useState([])
+  React.useEffect(() => { fetch_vehicles() }, [])
+
+  const fetch_vehicles = async () => {
+      setData(await getUsersLicenses())
+  }
+  
+  const[verified, setVerified] = React.useState([])
+  React.useEffect(() => setVerified(fetch_verified()), [])
+
+  const fetch_verified = async () => {
+    setVerified(await verify())
+  }
+
+  if(verified){
+
     return (
       <div className='Fuehrerschein'>
         <NavLink to="../Fuehrerscheinanfrage">
         <Button variant='primary' style={{marginLeft: '50px', marginTop: '50px', marginBottom:'10px'}}>Führerschein Antrag erstellen</Button>
         </NavLink>
-        <TableList data={getData()} exception='Sie haben keine Führerscheine oder Führerscheinanträge.' heads={['#', 'Klasse', 'Ausstellung']}/>
+        <TableList data={data} exception='Sie haben keine Führerscheine oder Führerscheinanträge.' heads={['#', 'Klasse', 'Ausstellung']}/>
       </div>
     )
   }

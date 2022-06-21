@@ -15,7 +15,7 @@ export default function TableList(props){
                 <tr>
                     {
                         Object.entries(props.data[0]).map(
-                            ([key, value]) => <th>{key}</th>
+                            ([key, value]) => <th key={key}>{key}</th>
                         )
                     }
                 </tr>

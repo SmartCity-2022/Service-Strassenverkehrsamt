@@ -5,31 +5,18 @@ from api.jwt import verify, read_payload
 from ..serializers import LicenseRequestSerializer
 
 
-@api_view(["GET"])
-def get_all_license_requests(request):
-    requests = Licenserequest.objects.all()
-    serializer = LicenseRequestSerializer(requests, many=True)
-    return Response(serializer.data)
-
-
 @api_view(["POST"])
 def add_license_request(request):
     status = verify(request)
     if status != 200:
         return Response(status=status)
+    payload = read_payload(request)
+    request.data["citizen"] = payload["email"]
+    request.data["status"] = "In Bearbeitung"
     serializer = LicenseRequestSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
-    return Response(serializer.data)
-
-
-@api_view(["GET"])
-def get_license_request_by_id(request, id):
-    try:
-        licenserequest = Licenserequest.objects.get(pk=id)
-    except Licenserequest.DoesNotExist:
-        return Response(status=404)        
-    serializer = LicenserequestSerializer(licenserequest, many=False)
+    print(request.data, serializer.data)
     return Response(serializer.data)
 
 

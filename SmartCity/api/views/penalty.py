@@ -5,13 +5,6 @@ from api.jwt import verify, read_payload
 from ..serializers import PenaltySerializer
 
 
-@api_view(["GET"])
-def get_all_penaltys(request):
-    penaltys = Penalty.objects.all()
-    serializer = PenaltySerializer(penaltys, many=True)
-    return Response(serializer.data)
-
-
 @api_view(["POST"])
 def add_penalty(request):
     status = verify(request)
@@ -20,16 +13,6 @@ def add_penalty(request):
     serializer = PenaltySerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
-    return Response(serializer.data)
-
-
-@api_view(["GET"])
-def get_penalty_by_id(request, id):
-    try:
-        penalty = Penalty.objects.get(pk=id)
-    except Penalty.DoesNotExist:
-        return Response(status=404)        
-    serializer = PenaltySerializer(penalty, many=False)
     return Response(serializer.data)
 
 

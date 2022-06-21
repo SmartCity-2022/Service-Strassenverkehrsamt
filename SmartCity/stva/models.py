@@ -36,8 +36,10 @@ class License(models.Model):
 class Licenserequest(models.Model):
     id = models.IntegerField(primary_key=True, auto_created=True)
     citizen = models.CharField(max_length=100)
-    form = models.CharField(max_length=500)
+    form = models.CharField(max_length=500, null=True)
     issued = models.DateTimeField(auto_now_add=True)
+    status = models.CharField(max_length=15)
+    licenseclass = models.CharField(max_length=5)
     
 
     class Meta:
@@ -63,6 +65,7 @@ class Registerrequest(models.Model):
     registration2 = models.CharField(max_length=500)
     vehicle = models.ForeignKey('Vehicle', on_delete=models.CASCADE, db_column='vehicle')
     hucertificate = models.CharField(db_column='huCertificate', max_length=500)  # Field name made lowercase.
+    status = models.CharField(max_length=15)
     owner = models.CharField(max_length=100)
 
     class Meta:

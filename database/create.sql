@@ -37,10 +37,13 @@ CREATE TABLE `penalty` (
 CREATE TABLE `licenserequest` (
   `id` int NOT NULL AUTO_INCREMENT,
   `citizen` varchar(100) NOT NULL,
-  `form` varchar(500) NOT NULL,
-  `issued` datetime NOT NULL,
+  `form` varchar(500) DEFAULT NULL,
+  `issued` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `status` varchar(15) NOT NULL DEFAULT 'Ungültig',
+  `licenseclass` varchar(5) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
 
 
 CREATE TABLE `license` (

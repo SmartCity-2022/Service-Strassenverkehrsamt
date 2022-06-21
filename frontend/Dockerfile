@@ -8,6 +8,8 @@ RUN npm ci
 
 COPY ./ /app/
 
+ENV REACT_APP_BACKEND_URL=https://strassenverkehrsamt.smartcity.w-mi.de/api/
+
 RUN npm run build
 
 ## Create NGINX deployment

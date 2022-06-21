@@ -12,4 +12,4 @@ RUN apk add --no-cache build-base && apk add --no-cache mariadb-connector-c-dev 
 
 COPY . /code/
 
-CMD ["python", "manage.py", "runserver"]
+CMD ["python", "manage.py", "runserver", "0.0.0.0:80"]

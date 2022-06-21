@@ -40,9 +40,11 @@ function Fuehrerschein() {
         </NavLink>
         <Tabs defaultActiveKey="licenses" id="tabs" className="mb-3">
           <Tab eventKey="licenses" title="Führerscheine">
+            <Infobox variant='light' text='Sehen Sie hier Ihre anerkannten Führerscheine an.'/>
             <TableList data={licenses} exception='Sie haben keine Führerscheine.'/>
           </Tab>
           <Tab eventKey="requests" title="Führerschein Anträge">
+            <Infobox variant='light' text='Sehen Sie hier Ihre offenen Führerscheinanträge an.'/>
             <TableList data={requests} exception='Sie haben keine offenen Führerscheinanträge.'/>
           </Tab>
         </Tabs>

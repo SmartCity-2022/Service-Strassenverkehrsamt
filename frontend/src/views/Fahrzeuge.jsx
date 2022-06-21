@@ -41,9 +41,11 @@ function Fahrzeuge() {
         <Button variant='primary' style={{marginLeft: '10px', marginTop: '50px', marginBottom:'10px'}} disabled={!Array.isArray(vehicles)}>Fahrzeuge verwalten</Button>
         <Tabs defaultActiveKey="kfz" id="tabs" className="mb-3">
           <Tab eventKey="kfz" title="Angemeldete Fahrzeuge">
+            <Infobox variant='light' text='Sehen Sie hier Ihre angemeldeten Fahrzeuge an.'/>
             <TableList data={vehicles} exception='Sie haben keine angemeldeten Fahrzeuge.'/>
           </Tab>
           <Tab eventKey="req" title="Registrierungs Anträge">
+            <Infobox variant='light' text='Sehen Sie hier Ihre offenen Registrierungsanträge an.'/>
             <TableList data={v_requests} exception='Sie haben keine offenen Anträge.'/>
           </Tab>
         </Tabs>

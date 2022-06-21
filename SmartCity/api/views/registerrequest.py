@@ -5,13 +5,6 @@ from api.jwt import verify, read_payload
 from ..serializers import RegisterRequestSerializer
 
 
-@api_view(["GET"])
-def get_all_register_requests(request):
-    requests = Registerrequest.objects.all()
-    serializer = RegisterRequestSerializer(requests, many=True)
-    return Response(serializer.data)
-
-
 @api_view(["POST"])
 def add_register_request(request):
     status = verify(request)
@@ -21,16 +14,6 @@ def add_register_request(request):
     serializer = RegisterRequestSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
-    return Response(serializer.data)
-
-
-@api_view(["GET"])
-def get_register_request_by_id(request, id):
-    try:
-        registerrequest = Registerrequest.objects.get(pk=id)
-    except Registerrequest.DoesNotExist:
-        return Response(status=404)        
-    serializer = RegisterrequestSerializer(registerrequest, many=False)
     return Response(serializer.data)
 
 

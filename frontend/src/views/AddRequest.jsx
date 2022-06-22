@@ -35,7 +35,7 @@ function AddRequest() {
     navigate("/Fuehrerschein")
   }
 
-  if(verified){
+  if(verified === true){
 
     return (
       <div className='AddRequest'>

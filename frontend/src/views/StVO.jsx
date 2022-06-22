@@ -38,7 +38,7 @@ function StVO() {
     return val
   }
 
-  if(verified){
+  if(verified === true){
 
     return (
       <div className='StVO'>

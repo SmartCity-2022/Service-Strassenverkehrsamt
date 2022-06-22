@@ -31,7 +31,7 @@ function Fuehrerschein() {
     setVerified(await verify())
   }
 
-  if(verified){
+  if(verified === true){
 
     return (
       <div className='Fuehrerschein'>

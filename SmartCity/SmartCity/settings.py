@@ -26,9 +26,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-ghvmks(v4mq%7ltz1%(-5v173o!$p2$3fe(klr@#@%(vd-(css'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    '.localhost',
+    '.strassenverkehrsamt-backend.smartcity.svc.cluster.local',
+    '.strassenverkehrsamt-backend.smartcity.svc.cluster.local',
+    '.smartcity.w-mi.de',
+    '.smartcity.w-mi.de'
+]
 
 configParser = configparser.RawConfigParser()
 configPath = r'./config/config.cfg'

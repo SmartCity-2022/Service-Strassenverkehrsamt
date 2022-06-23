@@ -29,7 +29,7 @@ export default function TableList(props){
                             {
                                 Object.entries(set).map(
                                     ([key, value]) => {if(key != "id"){
-                                        return <td>{value}</td>
+                                        return <td key={key + value}>{value}</td>
                                     }}
                                 )
                             }

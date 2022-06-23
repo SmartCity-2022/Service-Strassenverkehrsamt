@@ -5,6 +5,5 @@ from api.views import bill
 
 urlpatterns = [
      path("bill/create", bill.add_bill),
-     path("bill/user/", bill.get_bill_by_user),
-     path("bill/delete/<int:id>/", bill.delete_bill_by_id),
+     path("bill/user/", bill.get_bill_by_user)
 ]

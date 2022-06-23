@@ -9,7 +9,7 @@ from django.db import models
 
 
 class Bill(models.Model):
-    id = models.IntegerField(primary_key=True, auto_created=True)
+    # id = models.IntegerField(primary_key=True, auto_created=True)
     value = models.FloatField()
     description = models.CharField(max_length=100)
     issued = models.DateTimeField(auto_now_add=True)
@@ -23,7 +23,7 @@ class Bill(models.Model):
 
 
 class License(models.Model):
-    id = models.IntegerField(primary_key=True, auto_created=True)
+    # id = models.IntegerField(primary_key=True, auto_created=True)
     owner = models.CharField(max_length=100)
     type = models.CharField(max_length=10)
     received = models.DateTimeField(auto_now_add=True)
@@ -34,7 +34,7 @@ class License(models.Model):
 
 
 class Licenserequest(models.Model):
-    id = models.IntegerField(primary_key=True, auto_created=True)
+    # id = models.IntegerField(primary_key=True, auto_created=True)
     citizen = models.CharField(max_length=100)
     form = models.CharField(max_length=500, null=True)
     issued = models.DateTimeField(auto_now_add=True)
@@ -48,7 +48,7 @@ class Licenserequest(models.Model):
 
 
 class Penalty(models.Model):
-    id = models.IntegerField(primary_key=True, auto_created=True)
+    # id = models.IntegerField(primary_key=True, auto_created=True)
     owner = models.CharField(max_length=100)
     received = models.DateTimeField(auto_now_add=True)
     value = models.IntegerField()
@@ -60,7 +60,7 @@ class Penalty(models.Model):
 
 
 class Registerrequest(models.Model):
-    id = models.IntegerField(primary_key=True, auto_created=True)
+    # id = models.IntegerField(primary_key=True, auto_created=True)
     registration1 = models.CharField(max_length=500)
     registration2 = models.CharField(max_length=500)
     vehicle = models.ForeignKey('Vehicle', on_delete=models.CASCADE, db_column='vehicle')
@@ -74,7 +74,7 @@ class Registerrequest(models.Model):
 
 
 class Vehicle(models.Model):
-    id = models.IntegerField(primary_key=True, auto_created=True)
+    # id = models.IntegerField(primary_key=True, auto_created=True)
     brand = models.CharField(max_length=45)
     model = models.CharField(max_length=45)
     firstregistration = models.DateTimeField(db_column='firstRegistration')  # Field name made lowercase.

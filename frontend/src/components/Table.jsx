@@ -15,7 +15,9 @@ export default function TableList(props){
                 <tr>
                     {
                         Object.entries(props.data[0]).map(
-                            ([key, value]) => <th key={key}>{key}</th>
+                            ([key, value]) => {if(key != "id"){
+                                return <th key={key}>{key}</th>
+                            }}
                         )
                     }
                 </tr>
@@ -26,7 +28,9 @@ export default function TableList(props){
                         <tr key={set.id}>
                             {
                                 Object.entries(set).map(
-                                    ([key, value]) => <td>{value}</td>
+                                    ([key, value]) => {if(key != "id"){
+                                        return <td>{value}</td>
+                                    }}
                                 )
                             }
                         </tr>

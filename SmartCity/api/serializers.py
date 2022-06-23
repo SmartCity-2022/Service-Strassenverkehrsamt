@@ -5,35 +5,35 @@ from stva.models import *
 class BillSerializer(serializers.ModelSerializer):
     class Meta:
         model = Bill
-        fields = ["value", "description", "receiver", "deadline"]
+        fields = ["id", "value", "description", "receiver", "deadline"]
 
 
 class LicenseSerializer(serializers.ModelSerializer):
     class Meta:
         model = License
-        fields = ["owner", "type", "received"]
+        fields = ["id", "owner", "type", "received"]
         
         
 class LicenseRequestSerializer(serializers.ModelSerializer):
     class Meta:
         model = Licenserequest
-        fields = ["citizen", "form", "issued", "licenseclass", "status"]
+        fields = ["id", "citizen", "form", "issued", "licenseclass", "status"]
         
         
 class PenaltySerializer(serializers.ModelSerializer):
     class Meta:
         model = Penalty
-        fields = ["owner", "received", "value", "reason"]
+        fields = ["id", "owner", "received", "value", "reason"]
         
         
 class RegisterRequestSerializer(serializers.ModelSerializer):
     class Meta:
         model = Registerrequest
-        fields = ["registration1", "registration2", "vehicle", "huCertificate", "status", "owner"]
+        fields = ["id", "registration1", "registration2", "vehicle", "hucertificate", "status", "owner"]
         
         
+
 class VehicleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Vehicle
-        fields = ["brand", "model", "firstregistration", "displacement", "fueltype", "emissions", "hudeadline", "licenseplate", "owner"]
-        
+        fields = ["id", "brand", "model", "firstregistration", "displacement", "fueltype", "emissions", "hudeadline", "licenseplate", "owner"]

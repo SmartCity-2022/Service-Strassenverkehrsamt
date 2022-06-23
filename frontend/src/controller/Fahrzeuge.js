@@ -18,5 +18,7 @@ export async function getUsersRegisterRequests(){
 
 export async function postVehicle(body){
     const URL = process.env.REACT_APP_BACKEND_URL + 'vehicle/create'
-    return await axios.post(URL, body, {withCredentials: true})
+    const response = await axios.post(URL, body, {withCredentials: true})
+    const URL_REG = process.env.REACT_APP_BACKEND_URL + 'registerrequest/create'
+    return await axios.post(URL_REG, {"vehicle": response.data.id}, {withCredentials: true})
 }

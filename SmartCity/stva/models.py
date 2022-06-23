@@ -61,10 +61,10 @@ class Penalty(models.Model):
 
 class Registerrequest(models.Model):
     # id = models.IntegerField(primary_key=True, auto_created=True)
-    registration1 = models.CharField(max_length=500)
-    registration2 = models.CharField(max_length=500)
+    registration1 = models.CharField(max_length=500, null=True)
+    registration2 = models.CharField(max_length=500, null=True)
     vehicle = models.ForeignKey('Vehicle', on_delete=models.CASCADE, db_column='vehicle')
-    hucertificate = models.CharField(db_column='huCertificate', max_length=500)  # Field name made lowercase.
+    hucertificate = models.CharField(db_column='huCertificate', max_length=500, null=True)  # Field name made lowercase.
     status = models.CharField(max_length=15)
     owner = models.CharField(max_length=100)
 

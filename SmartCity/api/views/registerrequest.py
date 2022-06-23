@@ -11,6 +11,7 @@ def add_register_request(request):
     if status != 200:
         return Response(status=status)
     request.data["status"] = "In Bearbeitung"
+    request.data["owner"] = read_payload(request)["email"]
     serializer = RegisterRequestSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()

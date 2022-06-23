@@ -29,7 +29,7 @@ class PenaltySerializer(serializers.ModelSerializer):
 class RegisterRequestSerializer(serializers.ModelSerializer):
     class Meta:
         model = Registerrequest
-        fields = ["id", "registration1", "registration2", "vehicle", "huCertificate", "status", "owner"]
+        fields = ["id", "registration1", "registration2", "vehicle", "hucertificate", "status", "owner"]
         
         
 

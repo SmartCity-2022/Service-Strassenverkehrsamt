@@ -1,3 +1,4 @@
+![GitHub tag (latest SemVer)](https://shields.herrvergesslich.de/github/v/tag/smartcity-2022/service-strassenverkehrsamt?label=Version)
 # Service-Strassenverkehrsamt
 
 "Service-Strassenverkehrsamt" is a microservice of the "SmartCity"-Project. Here, a user is able to see registered vehicles or register new ones via requests. In addition to that, a citizen of the SmartCity will be able to create requests for new driver licenses. And finally a user is able to see open bills and penaltys.
@@ -42,6 +43,7 @@ In directory frontend:
     - In SmartCity directory
 
             python manage.py runserver
+
             
 ## Run tests
 

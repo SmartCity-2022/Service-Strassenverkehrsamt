@@ -16,7 +16,6 @@ def add_license_request(request):
     serializer = LicenseRequestSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
-    print(request.data, serializer.data)
     return Response(serializer.data)
 
 

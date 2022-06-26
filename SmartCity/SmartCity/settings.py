@@ -52,7 +52,6 @@ INSTALLED_APPS = [
     'corsheaders',
     'stva',
     'rabbitmq',
-    'tests',
 ]
 
 MIDDLEWARE = [

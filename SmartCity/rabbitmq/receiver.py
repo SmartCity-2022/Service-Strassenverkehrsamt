@@ -22,7 +22,7 @@ class MQReceiver(threading.Thread):
                     )
                 )
             )
-        except:
+        except pika.exceptions.AMQPConnectionError:
             return
         channel = connection.channel()
         channel.exchange_declare(exchange=configParser.get("rabbitMQ-configuration", "EXCHANGE"), exchange_type='topic', durable=True)

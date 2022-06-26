@@ -29,7 +29,7 @@ class MQManager(threading.Thread):
                 send(key=self.configParser.get("rabbitMQ-routes", "HELLO"), headers=None, properties=None, payload="")
                 self.success = True
                 return
-            except:
+            except pika.exceptions.AMQPConnectionError:
                 self.retries +=1
                 print(f" [x] Could not establish connection to RabbitMQ host after {self.retries} tries.", "\n")  
                 print(f" [x] Retrying in {self.retry_delay} seconds.", "\n") 

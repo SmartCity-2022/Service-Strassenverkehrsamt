@@ -25,7 +25,7 @@ def verify(request):
             token = http.request("POST",
                                 configParser.get("misc", "mainhub_url") + "/token", {"token": refresh})
             request.cookies.__setattr__("accessToken", token)
-            refresh_decode = jwt.decode(token, os.environ.get("SECRET"), algorithms=["HS256"])
+            refresh_decode = jwt.decode(token, JWT_SECRET, algorithms=["HS256"])
             request.state.email = refresh_decode.get("email")
         except:
             return 403

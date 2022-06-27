@@ -1,0 +1,94 @@
+name: Build & Test
+
+on:
+  pull_request:
+    branches: [ 'master' ]
+
+env:
+  IMAGE_NAME_FRONTEND_TAG: ${{ github.repository }}/frontend:test
+  IMAGE_NAME_BACKEND_TAG: ${{ github.repository }}/SmartCity:test
+
+jobs:
+  buildFrontend:
+    name: '[FRONTEND] Build & Test'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Frontend Env to Lowercase
+        run: |
+          echo "FRONTEND_TAG=${IMAGE_NAME_FRONTEND_TAG,,}">>${GITHUB_ENV}
+      - name: Checkout repository
+        uses: actions/checkout@v3
+    
+      - name: Setup Docker buildx
+        uses: docker/setup-buildx-action@79abd3f86f79a9d68a23c75a09a9a85889262adf
+      
+      - name: Build Image
+        uses: docker/build-push-action@v3
+        with:
+          context: ./frontend
+          load: true
+          tags: ${{ env.FRONTEND_TAG }}
+          
+  buildBackend:
+    name: '[BACKEND] Build & Test'
+    runs-on: ubuntu-latest
+    services:
+      mysql:
+        image: mysql:latest
+        env:
+          MYSQL_DATABASE: stva
+          MYSQL_HOST: 127.0.0.1
+          MYSQL_ROOT_PASSWORD: 9870
+        ports:
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s 
+    steps:
+      - name: Backend Env to Lowercase
+        run: |
+          echo "BACKEND_TAG=${IMAGE_NAME_BACKEND_TAG,,}">>${GITHUB_ENV}
+
+      - name: Checkout repository
+        uses: actions/checkout@v3
+    
+      - name: Setup Docker buildx
+        uses: docker/setup-buildx-action@79abd3f86f79a9d68a23c75a09a9a85889262adf
+
+      - name: Apply MySQL File to Database
+        run: |
+          mysql -h 127.0.0.1 -P 3306 -u root stva < ./database/create.sql 
+
+      - name: Change auth plugin for root
+        run: |
+          mysql -h 127.0.0.1 -P 3306 -u root -e "ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY '';FLUSH PRIVILEGES;"
+
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.10"
+          
+      - name: Install pip and install dependencies
+        run: |
+          cd ./SmartCity
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+      - name: Start Backend
+        run: |
+          cd ./SmartCity
+          python manage.py runserver &
+      
+      - name: Wait for Backend to start (10 seconds)
+        run: |
+          sleep 10
+
+      - name: Start tests
+        run: |
+          cd ./SmartCity/test
+          python test.py
+        
+      - name: Build Image
+        uses: docker/build-push-action@v3
+        with:
+          context: ./SmartCity
+          load: true
+          tags: ${{ env.BACKEND_TAG }}
